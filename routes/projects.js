@@ -103,7 +103,7 @@ const internalAttachmentUpload = multer({
 
 router.get('/', projectController.getAllProjects);
 router.get('/available-for-sales-order/:developerId', projectController.getAvailableProjectsForSalesOrder);
-router.get('/dev/:id', projectController.getProjectByDeveloper);
+router.get('/dev/:developerId', projectController.getProjectsByDeveloper);
 router.get('/devTag/:tag', projectController.getProjectByDeveloperTag);
 router.get('/tag/:tag', projectController.getProjectByTag);
 router.get('/:id', projectController.getProjectById);

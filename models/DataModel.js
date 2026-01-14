@@ -12,7 +12,17 @@ class DataModel {
             return [];
         }
         const data = fs.readFileSync(this.filePath);
-        return JSON.parse(data);
+        const parsed = JSON.parse(data);
+        // Ensure we always return an array
+        if (Array.isArray(parsed)) {
+            return parsed;
+        } else if (parsed && typeof parsed === 'object') {
+            // If it's a single object, wrap it in an array
+            return [parsed];
+        } else {
+            // If it's something else, return empty array
+            return [];
+        }
     }
 
     // Helper function to write data to JSON file
@@ -84,7 +94,9 @@ class DataModel {
     // New Method: Get Items by Developer ID (specific to projects)
     getProjectByDeveloperId(developerId) {
         const data = this.readData();
-        return data.filter(item => item.developer === developerId);
+        // Convert both to strings for comparison to handle type mismatches
+        const developerIdStr = String(developerId);
+        return data.filter(item => String(item.developer) === developerIdStr);
     }
 
      // New Method: Get Items by Project ID (specific to Cameras)
